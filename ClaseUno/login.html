@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <script type="text/javascript">
+
+        window.onload = carga;
+
+        function carga(){
+            //es lo mismo que hacer .onclick, pero me permite suscribirme a diferentes eventos)
+          document.getElementById("sendButton").addEventListener("click", funcionMostrar)
+          document.getElementById("sendButton").addEventListener("mouseover", function(){
+              console.log("pasaste por arriba");
+          })
+          document.getElementById("resetButton").addEventListener("dblclick", function(){
+              console.log("DEJALO QUIETO");
+          })
+          document.getElementById("resetButton").addEventListener("drag", function(){
+              console.log("SACA LA MANO DE AHI");
+          })
+        }
+
+        function funcionMostrar( textoInput )
+        {
+            var texto = textoInput;
+            alert("Texto: " + texto);
+        }
+
+        function validarUsuario(){
+            var inputUser = document.getElementById("userInput").value;
+            var inputPassword = document.getElementById("passInput");
+            if( inputUser === "usuario" && inputPassword.value === "password" ){
+                alert("Correcto: " + inputUser);
+            }
+            else{
+                alert("incorrecto: " + inputPassword);
+            }
+        }
+    </script>
+</head>
+<body>
+    <fieldset title="Login">
+        <legend>Mi Login</legend>
+            <form method="POST">
+                <label>Usuario</label>
+                <br>
+                <input type="text" name = "username" placeholder="Usuario..." id="userInput">
+                <br>
+                <label>Password</label>
+                <br>
+                <input type="password" name="userpass" id="passInput" placeholder="Password...">
+                <br>
+                <input type="checkbox" checked name="rememberMe" id="rememberMe"><label>Recordarme</label>
+                <br>
+                <input type="submit" name="sendButton" id="sendButton" title="Submit Data" value="Enviar Datos" >
+                <input type="reset" name="resetButton" id="resetButton" title="Clean Data" value="Borrar Ingresos" draggable="true">
+            </form>
+    </legend>
+    
+</body>
+</html>
