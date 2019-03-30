@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calculadora</title>
+    <script type="text/javascript" src="functions.js"></script>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <fieldset name="Calculadora">
+        <legend>Sumar Numeros</legend>
+        <label>Se debe ingresar dos numeros y presionar en el boton sumar</label>
+        <br>
+        <input type="number" id="valOne" placeholder="type a number..">+
+        <input type="number" id="valTwo" placeholder="type a number..">
+        <button type="button" id="sum">Sumar</button>
+        <button type="button" id="sumAndSave">Sumar y Guardar</button>
+        <br>
+        <hr>
+        <label>Resultado:</label><input type="number" id="resultBox">
+        <hr>
+        <h2>Historial de Resultados:</h2>
+        <table border="1" id="resultTable">
+            <thead>
+                <th>Primer Numero</th>
+                <th>Segundo Numero</th>
+                <th>Resultados</th>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>
