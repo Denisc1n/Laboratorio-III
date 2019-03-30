@@ -11,7 +11,7 @@
             //es lo mismo que hacer .onclick, pero me permite suscribirme a diferentes eventos)
           document.getElementById("sendButton").addEventListener("click", funcionMostrar)
           document.getElementById("sendButton").addEventListener("mouseover", function(){
-              console.log("pasaste por arriba");
+            
           })
           document.getElementById("resetButton").addEventListener("dblclick", function(){
               console.log("DEJALO QUIETO");
@@ -19,6 +19,10 @@
           document.getElementById("resetButton").addEventListener("drag", function(){
               console.log("SACA LA MANO DE AHI");
           })
+          document.getElementById("resetButton").addEventListener("click", function(){
+            document.getElementById("resetButton").style.cursor = pointer;
+          })
+         
         }
 
         function funcionMostrar( textoInput )
