@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/indexfunctions.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido al Blog</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Detalles</a></li>
+                <li><a href="#" id="newPost">NUEVO</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="hiddenDiv" class="loadDiv" hidden>
+            <img src="resources/spinner.gif" alt="image" class="imageClass">
+        </div>
+    <main>
+            <fieldset id="fieldset" class= "contenedor divAbsolute" hidden>
+                    <button type="button" id="buttonClose" class="buttonClose">X</button>
+                    <div class="form">
+                        <label class="formulario">Titulo</label>
+                        <br>
+                        <input type="text" id="inputTitle"  class="inputSimple" placeholder="Titulo..." />
+                        <br>
+                        <label>Encabezado</label>
+                        <br>
+                        <input type="text" id="inputHeader"  class="inputSimple" placeholder="Encabezado..."/>
+                        <br>
+                        <label>Contenido</label>
+                        <br>
+                        <textarea id="textArea" title="New Post" rows="10"></textarea>
+                        <button type="button" class="buttonClose" id="saveButton">Publicar</button>
+                    </div>
+                </fieldset>
+        <section>
+            <article></article>
+        </section>
+    </main>
+    <footer>
+        <br>
+    </footer>
+</body>
+</html>

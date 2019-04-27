@@ -1,0 +1,73 @@
+input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+table{
+    width: 100%;
+}
+
+
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2;}
+
+  tr:hover {background-color: #ddd;}
+
+.contenedor{
+    width: 50%;
+    background-color: #f2f2f2;
+    padding: 20px;
+    position:fixed;
+    right: 25%;
+    bottom: 25%;
+    margin: auto;
+    animation-name: aparecer;
+    animation-duration: 4s;
+}
+
+input[name='boton']{
+    border-style: none;
+    color: white;
+    font-weight: bold;
+    font-size: 15pt;
+    height: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: green;
+}
+
+#cerrar{
+    background-color: rgb(109, 35, 35);
+    color: white;
+    font-weight: bold;
+    height: 50px;
+    width: 50px;
+    border-radius: 8px;
+    cursor: pointer;
+    border-style: none;
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: 5px ;
+}
+
+@keyframes aparecer{
+    from {opacity: 0}
+     to {opacity: 1}
+}
+
+
+/*tr, td{
+    width: 100%; 
+}*/
