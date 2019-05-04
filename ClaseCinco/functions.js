@@ -28,6 +28,7 @@ function callback() {
                 elementoTr.appendChild(generateTd(tbodyObject.childElementCount));
                 //table.innerHTML += "<tr><td>"+persona.nombre+"</td>"+"<td>"+persona.apellido+"</td>"+"<td>"+persona.fecha+"</td>"+"<td>"+persona.telefono+"</td></tr>";
             });
+            localStorage.setItem('cachedData', JSON.stringify(personas));
         }
         else{
             console.log("Error en la respuesta del servidor Numero: "+xml.status);
@@ -35,10 +36,31 @@ function callback() {
     }
 }
 
+function loadTableFromCache(){
+    var personas = JSON.parse(localStorage.getItem('cachedData'));
+    var tbodyObject = document.getElementById("tableBody");
+            
+    personas.forEach(persona => {
+        var elementoTr = document.createElement('tr');
+        tbodyObject.appendChild(elementoTr);
+        elementoTr.appendChild(generateTd(persona.nombre));
+        elementoTr.appendChild(generateTd(persona.apellido));
+        elementoTr.appendChild(generateTd(persona.fecha));
+        elementoTr.appendChild(generateTd(persona.telefono));
+        elementoTr.appendChild(generateTd(tbodyObject.childElementCount));
+        //table.innerHTML += "<tr><td>"+persona.nombre+"</td>"+"<td>"+persona.apellido+"</td>"+"<td>"+persona.fecha+"</td>"+"<td>"+persona.telefono+"</td></tr>";
+    });
+
+}
 
 function loadEvents()
 {
-    loadTable();
+    if(localStorage.getItem('cachedData') == null)
+        loadTable();
+
+    else{
+        loadTableFromCache();
+    }
     document.getElementById("saveButton").addEventListener("click", saveFunction);
     document.getElementById("addButton").addEventListener("click",abrir);
     document.getElementById("buttonClose").addEventListener("click",cerrar);
@@ -68,12 +90,22 @@ function generateTd (data){
     
     }
     else{
+        elementoTd.setAttribute('class','actions');
         var elementoA = document.createElement('a');
         elementoA.text= "Borrar";
         elementoA.id = "deleteButton_"+data;
         elementoA.addEventListener('click', deleteFunction );
         elementoA.setAttribute('href','#');
         elementoTd.appendChild( elementoA );
+
+        elementoTd.appendChild(document.createTextNode(" "));
+
+        var elementoAMod = document.createElement('a');
+        elementoAMod.text= "Modificar";
+        elementoAMod.id = "modifyButton_"+data;
+        elementoAMod.addEventListener('click', modifyFunction );
+        elementoAMod.setAttribute('href','#');
+        elementoTd.appendChild( elementoAMod );
     }
     return elementoTd;
 }
@@ -139,6 +171,12 @@ function deleteFunction(e){
     //console.log(e.srcElement.parentNode.parentNode);
     var trToDelete = e.srcElement.parentNode.parentNode;
     trToDelete.parentNode.removeChild( trToDelete );
+}
+
+function modifyFunction(e){
+    e.preventDefault();
+    var fieldset = document.getElementById('fieldset');
+    console.log(fieldset.children);
 }
 
 
