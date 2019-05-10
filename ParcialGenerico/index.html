@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./js/functionsIndex.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Index</title>
+</head>
+<body>
+    <button type="button" id="addButton">Agregar</button>
+    <fieldset id="fieldset" class= "contenedor divAbsolute" style="background-color:lightgray;" hidden>
+        <button type="button" id="buttonClose" class="buttonClose">X</button>
+        <div class="form">
+        <label class="formulario">Nombre</label>
+            <br>
+            <input type="text" id="inputName"  width="50px" placeholder="Ingrese nombre..." />
+            <br>
+            <label>Apellido</label>
+            <br>
+            <input type="text" id="inputSurname" width="50px" placeholder="Ingrese Apellido..."/>
+            <br>
+            <label>Fecha de Nac.</label>
+            <br>
+            <input type="date" id="inputDob" width="50px" placeholder="Fecha de Nacimiento.."/>
+            <br>
+            <label>Telefono</label>
+            <br>
+            <input type="number" id="inputPhone" width="50px" placeholder="Telefono..."/>
+            <br>
+            
+            <button type="button" class="buttonSave" id="saveButton">Guardar</button>
+            
+        </div>
+    </fieldset>
+    <br>
+    <br>
+    <br>
+    <label>Lista de Resultados</label>
+    <table border="0" id="resultTable">
+            <thead class="resultTable">
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nac.</th>
+                <th>Telefono</th>
+                <th>Accion</th>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+</body>
+</html>
