@@ -100,8 +100,13 @@ function modificar(){
     var array = fechaR.split('-');
 
     var str = array[2]+"/"+array[1]+"/"+array[0];
-
     hasError = false;
+    if(validDate(fechaR) === false){
+        console.log("ERROR");
+        hasError = true;
+        document.getElementById("inputDob").className = "error";
+    }
+    
 
     if( (nombreR.length < 6) )
     {
@@ -117,6 +122,7 @@ function modificar(){
         document.getElementById("inputName").className = "error";
         hasError = true;
     }
+
 
     if(hasError)
         return;
@@ -151,7 +157,7 @@ function callbackModificacion(){
                 interactGif(true);
                 var hijos = miVariableFantasma.children;
                 hijos[1].innerHTML = get('inputName').value;
-               
+
                 var fechaR = get('inputDob').value;
                 var array = fechaR.split('-');
                 var str = array[2]+"/"+array[1]+"/"+array[0];
@@ -160,7 +166,7 @@ function callbackModificacion(){
                     hijos[4].innerHTML = "Mañana";
                 else 
                     hijos[4].innerHTML = "Noche";
-                    
+
                 cerrar();
 
                 }
@@ -190,4 +196,15 @@ function callbackEliminar(){
 function interactGif(status){
     var spinner = document.getElementById("hiddenDiv");
     spinner.hidden = status;
+}
+
+function validDate( date ){
+    var test = date.split('-');
+
+    currentDate = new Date().getFullYear();
+    if( test[0] > currentDate+1 || test[0]< currentDate)
+        return false;
+    else 
+        return true;
+    
 }
