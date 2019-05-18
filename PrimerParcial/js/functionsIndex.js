@@ -1,6 +1,6 @@
 var request = new XMLHttpRequest();  
 window.onload = loadEvents;
-
+var miVariableFantasma;
 
 function loadEvents(){
     get("buttonClose").addEventListener("click",cerrar);
@@ -44,23 +44,19 @@ function callback() {
 function abrir(e){
     var $fieldSet = get("fieldset");
     var $button = get("addButton");
-
+    miVariableFantasma = e.srcElement.parentNode;
     puntoDeInicio = e.srcElement.parentNode.firstChild;
     get('idH').value = puntoDeInicio.innerHTML;
     get('inputName').value = puntoDeInicio.nextSibling.innerHTML;
     get('inputCuatrimestre').selectedIndex = parseInt(puntoDeInicio.nextSibling.nextSibling.innerHTML)-1;
     get('inputCuatrimestre').disabled = true;
     var turno = puntoDeInicio.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
+    /* */
     if(turno === "Mañana")
-    {
         get('inputTurnoM').checked = true;
-        get('inputTurnoN').checked = false;
-    }
        
-    else{
+    else
         get('inputTurnoN').checked= true;
-        get('inputTurnoM').checked = false;
-    }
 
     var fecha = puntoDeInicio.nextSibling.nextSibling.nextSibling.innerHTML;
     nuevaFecha = fecha.split('/');
@@ -90,36 +86,48 @@ function generateTd (data){
     }
 
 function modificar(){
-    interactGif(false);
+    
     var nombreR = get('inputName').value;
     var cuatrimestreR = get('inputCuatrimestre').value;
     var fechaR = get('inputDob').value;
     var m = get('inputTurnoM').checked;
     var n = get('inputTurnoN').checked;
-    var idR = get('idH').value;
+    var idR = parseInt(get('idH').value);
     var turno = "Mañana"
     if(m === false){
         turno == "Noche";
     }
+    var array = fechaR.split('-');
+
+    var str = array[2]+"/"+array[1]+"/"+array[0];
+
+    hasError = false;
 
     if( (nombreR.length < 6) )
     {
-        if(nombreR.value==""){    
-            document.getElementById("inputName").className = "error";
-        }
-
-        if(m == false && n == false){
-            document.getElementById("inputName").className = "error";
-        }
-        return;
+        document.getElementById("inputName").className = "error";
+        hasError = true;
+    }
+    if(nombreR.value==""){    
+        document.getElementById("inputName").className = "error";
+        hasError = true;
     }
 
-    var obj = { id: idR, nombre:nombreR, cuatrimestre:parseInt(cuatrimestreR)+1,fecha:fechaR,turno:turno}
+    if(m == false && n == false){
+        document.getElementById("inputName").className = "error";
+        hasError = true;
+    }
+
+    if(hasError)
+        return;
+
+    interactGif(false);
+
+    var obj = { id: idR, nombre:nombreR, cuatrimestre:parseInt(cuatrimestreR)+1,fechaFinal:str,turno:turno}
     salida = JSON.stringify(obj);
-    console.log(salida);
     request.open("POST","http://localhost:3000/editar",true);
     request.onreadystatechange = callbackModificacion;
-    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.setRequestHeader("Content-type","application/json");
     request.send(salida);
     
 }
@@ -130,15 +138,53 @@ function eliminar(){
     var obj = { id: idR }
     salida = JSON.stringify(obj);
     request.open("POST","http://localhost:3000/eliminar",true);
-    request.onreadystatechange = callbackModificacion;
-    request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    request.onreadystatechange = callbackEliminar;
+    request.setRequestHeader("Content-type","application/json");
     request.send(salida);
 }
 
 function callbackModificacion(){
-    console.log("llego");
-    interactGif(true);
+    if( request.readyState === 4){
+        if(request.status === 200){
+                var response = JSON.parse(request.responseText);
+                console.log(response);
+                interactGif(true);
+                var hijos = miVariableFantasma.children;
+                hijos[1].innerHTML = get('inputName').value;
+               
+                var fechaR = get('inputDob').value;
+                var array = fechaR.split('-');
+                var str = array[2]+"/"+array[1]+"/"+array[0];
+                hijos[3].innerHTML = str;
+               if( get('inputTurnoM').checked )
+                    hijos[4].innerHTML = "Mañana";
+                else 
+                    hijos[4].innerHTML = "Noche";
+                    
+                cerrar();
+
+                }
+            else{
+                console.log("Error en la respuesta del servidor.", request.status);
+            }
+    }
 }
+
+
+function callbackEliminar(){
+    if( request.readyState === 4){
+        if(request.status === 200){
+                var response = JSON.parse(request.responseText);
+                console.log(response);
+                interactGif(true);
+                miVariableFantasma.parentNode.removeChild(miVariableFantasma);
+            }
+            else{
+                console.log("Error en la respuesta del servidor.", request.status);
+            }
+    }
+}
+
 
 
 function interactGif(status){
