@@ -102,7 +102,6 @@ function modificar(){
     var str = array[2]+"/"+array[1]+"/"+array[0];
     hasError = false;
     if(validDate(fechaR) === false){
-        console.log("ERROR");
         hasError = true;
         document.getElementById("inputDob").className = "error";
     }
@@ -127,6 +126,8 @@ function modificar(){
     if(hasError)
         return;
 
+    document.getElementById("inputName").classList.remove('error');
+    document.getElementById("inputDob").classList.remove("error");
     interactGif(false);
 
     var obj = { id: idR, nombre:nombreR, cuatrimestre:parseInt(cuatrimestreR)+1,fechaFinal:str,turno:turno}
@@ -202,6 +203,8 @@ function validDate( date ){
     var test = date.split('-');
 
     currentDate = new Date().getFullYear();
+    currentDay = new Date().getDay();
+
     if( test[0] > currentDate+1 || test[0]< currentDate)
         return false;
     else 
