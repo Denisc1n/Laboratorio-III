@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./js/functionsIndex.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Index</title>
+</head>
+<body>
+    <fieldset id="fieldset" class= "contenedor divAbsolute" style="background-color:lightgray;" hidden>
+        <button type="button" id="buttonClose" class="buttonClose">X</button>
+        <div class="form">
+                <div id="hiddenDiv" class="loadDiv" hidden>
+                        <img src="resources/spinner.gif" alt="image" class="imageClass">
+                    </div>
+        <label class="formulario">Nombre</label>
+            <input type="hidden" id="idH"  width="50px"/>
+            <br>
+            <input type="text" id="inputName"  width="50px" placeholder="Ingrese nombre..." />
+            <br>
+            <label>Cuatrimestre</label>
+            <br>
+            <select name="cuatrimestre" id='inputCuatrimestre'>
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+              </select>
+            <br>
+            <label>Turno</label>
+            <br>
+            <input type="radio" id="inputTurnoM" name="turno" width="50px" value="Mañana"/> Mañana
+            <input type="radio" id="inputTurnoN" name="turno" width="50px" value="Noche" checked /> Noche
+            <br>
+            <label>Fecha de Final</label>
+            <br>
+            <input type="date" id="inputDob" width="50px"/>
+            <br>
+            <button type="button" class="buttonSave" id="buttonSave">Modificar</button>
+            <button type="button" class="buttonDelete" id="deleteButton">Eliminar</button>
+            
+        </div>
+    </fieldset>
+    <br>
+    <br>
+    <br>
+    <label>Lista de Resultados</label>
+    <table border="0" id="resultTable">
+            <thead class="resultTable">
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cuatrimestre</th>
+                <th>Fecha de Final</th>
+                <th>Turno</th>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+</body>
+</html>
