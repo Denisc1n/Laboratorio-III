@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Modelo Parcial</title>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- BARRA DE NAVEGACION -->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark mt-5">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Lista</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" id="mostrar">Mostrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Formulario</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" href="" id="enlaces" data-toggle='dropdown'  aria-expanded="true" aria-haspopup="true">Ver</a>
+                    <div class="dropdown-menu" aria-labelledby="enlaces">
+                        <a href="#" class="dropdown-item" id="promediar" data-toggle="modal" data-target="#myModalReduce">Promedio</a>
+                        <a href="#" class="dropdown-item" id="filtrar" data-toggle="modal" data-target="#myModal">Filtrar</a>
+                        <a href="#" class="dropdown-item" id="">Solo nombre y apellido</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        
+        
+        <div class="row mt-4">
+            <!-- FORMULARIO -->
+            <div class="col-12 col-md-4">
+                <form action="">
+                    <h2 id="titulo">Alta Empleado</h2>
+                    <div class="form-group">
+                        <label for="txtName" class="form-label-control">Nombre:</label>
+                        <input type="text" name="name" id="txtName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtLastname" class="form-label-control">Apellido:</label>
+                        <input type="text" name="lastname" id="txtLastname" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAge" class="form-label-control">Edad:</label>
+                        <input type="number" name="inputAge" id="inputAge" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="legajo" class="form-label-control">Legajo:</label>
+                        <input type="number" name="legajo" id="legajo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="selHorario">Horario:</label>
+                        <select name="horario" id="selHorario" class="custom-select">
+                            <option value="Mañana">Mañana</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+                    </div>
+                    <div class="form-group d-flex justify-content-between mt-5">
+                        <button type="button" class="btn btn-danger"id="btnCancelar">
+                            <i class="fas fa-times mr-2"></i>Cancelar
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnAgregar">
+                            <i class="fas fa-save mr-2"></i>Agregar
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnModificar">
+                            <i class="fas fa-save mr-2"></i>Modificar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- TABLA -->
+            <div class="col-12 col-md-8 mt-4">
+                <h2 class="mb-4">Lista de Empleados</h2>
+                <table class="table table-hover table-striped">
+                    <thead class="thead">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                            <th>Legajo</th>
+                            <th>Horario</th>
+                            <th id="thAccion">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBody">
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal Filtro-->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Filtrar</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="horarioModal">Horario:</label>
+                        <select name="horario" id="horarioModal" class="custom-select">
+                            <option value="Mañana">Mañana</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="fas fa-times mr-2"></i>Cancelar
+                        </button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" id="btnFiltrar">
+                            <i class="fas fa-save mr-2"></i>Filtrar
+                        </button>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <!-- Modal Reduce-->
+        <div class="modal fade" id="myModalReduce" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Promedio</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="horarioModalReduce">Horario:</label>
+                        <select name="horario" id="horarioModalReduce" class="custom-select">
+                            <option value="Mañana">Mañana</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="fas fa-times mr-2"></i>Cancelar
+                        </button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" id="btnPromediar" data-toggle="modal" data-target=".bd-example-modal-sm">
+                            <i class="fas fa-save mr-2"></i>Promediar
+                        </button>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <!-- Mostrar Promedio -->
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content promedioAMostrar">
+                    <p>El Promedio es: <span for="" id="modalPromedioFinal"></span> </p>
+                </div>
+            </div>
+          </div>
+
+    </div>
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./js/persona.js"></script>
+    <script src="./js/empleado.js"></script>
+    <script src="./js/manejadora.js"></script>
+</body>
+</html>
