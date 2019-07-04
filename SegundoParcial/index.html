@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- STYLES -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./js/auto.js"></script>
+    <script src="./js/camioneta.js"></script>
+    <script src="./js/vehiculo.js"></script>
+    <script src="./js/index.js"></script>
+   
+    <title>Segundo Parcial</title>
+</head>
+<body>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark mt-5">
+                <ul class="navbar-nav">
+                    <!-- ITEM DE BARRA DE NAVEGACION -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-agregar" data-toggle="modal" data-target="#modalAgregar">Agregar</a>
+                    </li>
+                </ul>
+            </nav>
+        <div class="col-12 col-md-8">
+            <table class="table table-bordered">
+                <thead>
+                    <th>ID</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Precio</th>
+                    <th>Caracteristica</th>
+                    <th id="thAccion">Accion</th>
+                </thead>
+                <tbody id="tBody">
+                    <!--Dinamico-->
+                </tbody>
+            </table>
+        </div>  
+</body>
+<div id="modalAgregar" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Vehiculo</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                            <label for="numId" class="form-label-control">Id:</label>
+                            <input type="number" name="id" id="numId" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="txtMarca" class="form-label-control">Marca:</label>
+                            <input type="text" name="marca" id="txtMarca" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="txtModelo" class="form-label-control">Modelo:</label>
+                            <input type="text" name="modelo" id="txtModelo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="numPrecio" class="form-label-control">Precio</label>
+                            <input type="number" name="numPrecio" id="numPrecio" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="tipo" class="form-label-control">Tipo</label>
+                            <input type="radio" name="vtype" value="auto">Auto &nbsp;
+                            <input type="radio" name="vtype" value="camioneta">Camioneta
+                    </div>
+                    <div class="form-group" id="hiddenChar" hidden>
+                            <label for="tipo" class="form-label-control">Caracteristica</label>
+                    </div>
+                        
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+      
+        </div>
+</div>
+</html>
