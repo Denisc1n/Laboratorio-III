@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="./css/style.css">
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./js/vehiculo.js"></script>
     <script src="./js/auto.js"></script>
     <script src="./js/camioneta.js"></script>
-    <script src="./js/vehiculo.js"></script>
     <script src="./js/index.js"></script>
    
     <title>Segundo Parcial</title>
@@ -22,6 +22,15 @@
                     <!-- ITEM DE BARRA DE NAVEGACION -->
                     <li class="nav-item">
                         <a class="nav-link" href="" id="btn-agregar" data-toggle="modal" data-target="#modalAgregar">Agregar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-filtrar" data-toggle="modal" data-target="#modalFiltrar">Filtrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-promedio">Promedio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="btn-limpiar">Limpiar Almacenamiento</a>
                     </li>
                 </ul>
             </nav>
@@ -66,7 +75,7 @@
                     </div>
                     <div class="form-group">
                             <label for="tipo" class="form-label-control">Tipo</label>
-                            <input type="radio" name="vtype" value="auto">Auto &nbsp;
+                            <input type="radio" name="vtype" value="auto" checked>Auto &nbsp;
                             <input type="radio" name="vtype" value="camioneta">Camioneta
                     </div>
                     <div class="form-group" id="hiddenChar" hidden>
@@ -76,10 +85,29 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-default" id="btnCerrar" data-dismiss="modal">Close</button>
             </div>
           </div>
-      
+        </div>
+</div>
+<div id="modalFiltrar" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Filtrar</h4>
+            </div>
+            <div class="modal-body">
+                <select name="filtrarPor" id="filtrarPor" class="custom-select">
+                        <option value="camioneta">Camioneta</option>
+                        <option value="auto">Auto</option>
+                        <option value="todos">Todos</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="btnAplicar">Aplicar</button>
+              <button type="button" class="btn btn-default" id="btnCancelarFiltro" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
 </div>
 </html>

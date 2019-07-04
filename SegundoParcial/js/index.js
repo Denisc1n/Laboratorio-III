@@ -18,6 +18,9 @@ $(function () {
     $('input[name=vtype]').change(mostrarCaracteristica);
     $('#btn-agregar').click(calcularID);
     $('#btnGuardar').click(guardarVehiculo);
+    $('#btn-limpiar').click(limpiarAlmacenamiento);
+    $('#btnAplicar').click(filtrarPor);
+    mostrarVehiculos();
 });
 function mostrarCaracteristica() {
     if ($('input[name=vtype]:checked').val() === "auto") {
@@ -35,30 +38,101 @@ function mostrarCaracteristica() {
 }
 function guardarVehiculo() {
     var id = Number($('#numId').val());
-    console.log($('numId').val());
-    var modelo = String($('#inputModelo').val());
-    var marca = String($('#inputMarca').val());
-    var precio = Number($('#inputPrecio').val());
+    var modelo = String($('#txtModelo').val());
+    var marca = String($('#txtMarca').val());
+    var precio = Number($('#numPrecio').val());
     var tipo = $('input[name=vtype]:checked').val();
     if (tipo === "auto") {
         var nuevoAuto = void 0;
-        var detalle = Number($('input[name=car]:checked').val() === "true" ? 3 : 5);
+        var detalle = String($('input[name=car]:checked').val() === "true" ? "Coupe" : "Sedan");
         nuevoAuto = new Classes.Auto(id, marca, modelo, precio, detalle);
-        console.log(nuevoAuto);
+        var entidades = leerLocalStorage();
+        entidades.push(nuevoAuto.toJson());
+        guardarEnLocalStorage(entidades);
+        mostrarVehiculos();
     }
     else {
-        var detalle = Boolean($('input[name=car]:checked').val() === "true" ? true : false);
+        var detalle = $('input[name=car]:checked').val() === "true" ? "4x4" : "4x2";
         var nuevaCamioneta = new Classes.Camioneta(id, marca, modelo, precio, detalle);
+        var entidades = leerLocalStorage();
+        entidades.push(nuevaCamioneta.toJson());
+        guardarEnLocalStorage(entidades);
+        mostrarVehiculos();
     }
+    $(".modal").modal("hide");
 }
 function calcularID() {
     var entidades = leerLocalStorage();
-    var id = entidades.reduce(function (id, entidad) {
-        if (entidad.id > id)
-            return id = entidad.id;
+    var id = entidades.reduce(function (maxId, item) {
+        var vehiculo = JSON.parse(item);
+        if (maxId < vehiculo.id) {
+            maxId = vehiculo.id;
+        }
+        return maxId;
     }, 0);
     $('#numId').val(id + 1);
 }
-function filtrar() {
-    console.log('Filtrar');
+function mostrarVehiculos() {
+    var tBody = $('#tBody');
+    tBody.html('').find("tr:gt(0)").remove();
+    var objetos = leerLocalStorage();
+    objetos.forEach(function (element) {
+        var vehiculo = JSON.parse(element);
+        if (vehiculo.cuatroXcuatro != null) {
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+        }
+        else {
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+        }
+    });
+}
+function eliminar(i) {
+    var entidades = leerLocalStorage();
+    entidades.splice(i, 1);
+    guardarEnLocalStorage(entidades);
+    mostrarVehiculos();
+}
+function limpiarAlmacenamiento() {
+    //localStorage.clear();
+    console.log("Limpie el Storage");
+}
+function filtrarPor() {
+    var seleccion = $('#filtrarPor').val();
+    var listafiltrada;
+    if (seleccion === "auto") {
+        var entidades = leerLocalStorage();
+        listafiltrada = entidades.filter(function (entidad) {
+            var jsonentidad = JSON.parse(entidad);
+            console.log(jsonentidad.cantidadPuertas);
+            if (jsonentidad.cantidadPuertas != undefined)
+                return jsonentidad;
+        });
+    }
+    else if (seleccion === "camioneta") {
+        var entidades = leerLocalStorage();
+        listafiltrada = entidades.filter(function (entidad) {
+            var jsonentidad = JSON.parse(entidad);
+            if (jsonentidad.cuatroXcuatro != undefined)
+                return jsonentidad;
+        });
+    }
+    else {
+        listafiltrada = leerLocalStorage();
+    }
+    mostrarListaFiltrada(listafiltrada);
+}
+function mostrarListaFiltrada(lista) {
+    var tBody = $('#tBody');
+    tBody.html('').find("tr:gt(0)").remove();
+    var objetos = lista;
+    objetos.forEach(function (element) {
+        var vehiculo = JSON.parse(element);
+        if (vehiculo.cuatroXcuatro != null) {
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+        }
+        else {
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+        }
+    });
+    $(".modal").modal("hide");
 }
