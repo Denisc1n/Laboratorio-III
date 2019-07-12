@@ -20,6 +20,7 @@ $(function () {
     $('input[name=vtype]').change(mostrarCaracteristica);
     $('#btn-agregar').click(calcularID);
     $('#btnGuardar').click(guardarVehiculo);
+    $('#btnGuardarEdicion').click(editarVehiculo);
     $('#btn-limpiar').click(limpiarAlmacenamiento);
     $('#btnAplicar').click(filtrarPor);
     $('#btn-promedio').click(calcularPromedio);
@@ -68,11 +69,11 @@ function guardarVehiculo() {
         guardarEnLocalStorage(entidades);
         mostrarVehiculos();
     }
-    $("#modalAgregar")
-    .find("input,textarea,select")
-       .val('')
-       .end();
-    $(".modal").modal("hide");
+    //$("#modalAgregar")
+    //.find("input,textarea,select")
+    //   .val('')
+    //   .end();
+    //$(".modal").modal("hide");
     
 }
 function calcularID(){
@@ -99,7 +100,9 @@ function mostrarVehiculos():void{
                 <td>${vehiculo.modelo}</td>
                 <td>${vehiculo.precio}</td>
                 <td>${vehiculo.cuatroXcuatro == null ? vehiculo.cantidadPuertas : vehiculo.cuatroXcuatro}</td> 
-                <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+                <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a>
+                    <a href="#" class="btn btn-success" onClick="modificar(${objetos.indexOf(element)})">Modificar</a>
+                </td> 
             </tr>'); 
             `
         )
@@ -185,8 +188,10 @@ function mostrarListaFiltrada(lista:[]):void{
                 <td>${vehiculo.marca}</td>
                 <td>${vehiculo.modelo}</td>
                 <td>${vehiculo.precio}</td>
-                <td>${vehiculo.cuatroXcuatro == null ? vehiculo.cantidadPuertas : vehiculo.cuatroXcuatro}</td> 
-                <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+                <td>${vehiculo.cuatroXcuatro == undefined ? vehiculo.cantidadPuertas : vehiculo.cuatroXcuatro}</td> 
+                <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a>
+                    <a href="#" class="btn btn-success" onClick="modificar(${objetos.indexOf(element)})">Modificar</a>
+                </td> 
             </tr>'); 
             `
         )
@@ -273,4 +278,108 @@ function mostrarOcultarColumna(){
         var column = "table ." + $(this).attr("name");
         $(column).toggle();
     });
+}
+
+function modificar(i:number){
+    let entidades = leerLocalStorage();
+    let seleccion;
+    entidades.forEach(element => {
+        let jsonElement = JSON.parse(element);
+        if(jsonElement.id == (i+1)){
+            seleccion = jsonElement;
+        }
+    });
+    $("#numIdEdit").val(seleccion.id);
+    $("#txtMarcaEdit").val(seleccion.marca);
+    $("#txtModeloEdit").val(seleccion.modelo);
+    $("#numPrecioEdit").val(seleccion.precio);
+    if( seleccion.cuatroXcuatro != undefined ){
+        $("#chkCamioEdit").attr('checked',true);
+        $('#hiddenCharEdit input[name=car]').remove();
+        $('#hiddenCharEdit label').remove();
+        $('#hiddenCharEdit').append("<input type='radio' name='car' value='true'/><label>4x4</label> <input type='radio' name='car'value='false' checked/><label>4x2</label>");
+    }
+    else{
+        $('#hiddenCharEdit input[name=car]').remove();
+        $('#hiddenCharEdit label').remove();
+        $("#chkAutoEdit").attr('checked',true);
+        $('#hiddenCharEdit').append("<input type='radio' name='car' value='true'/><label>Coupe</label> <input type='radio' name='car'value='false' checked/><label>Sedan</label>");
+    }
+
+    $("#modalEditar").modal('show');
+}
+
+function editarVehiculo(){
+    let vehiculos = leerLocalStorageJSON();
+
+    var id:Number       = Number($('#numIdEdit').val());
+    let modelo:String   = String($('#txtModeloEdit').val());
+    let marca:String    = String($('#txtMarcaEdit').val());
+    let precio:Number   = Number($('#numPrecioEdit').val());
+    let tipo            = $('input[name=vtypeEdit]:checked').val();
+    let auxVehiculos:any[] = [];
+    if(tipo ==="auto")
+    {
+        let nuevoAuto;
+        let detalle:String  = String($('input[name=car]:checked').val() === "true"? "Coupe" : "Sedan");
+        nuevoAuto = new Classes.Auto(id, marca,modelo,precio,detalle);
+        
+        
+      vehiculos.forEach(element => {
+        if( element.id == nuevoAuto.id ){
+                  console.log("edito");
+                  element.marca = nuevoAuto.marca;
+                  element.modelo = nuevoAuto.modelo;
+                  element.precio = nuevoAuto.precio;
+                  if( detalle == "Sedan"){
+                      element.cantidadPuertas = "Sedan";
+                  }
+                  else{
+                      element.cantidadPuertas = "Coupe";
+                  }
+        }
+      });
+      vehiculos.forEach(element => {
+        auxVehiculos.push(JSON.stringify(element));
+      });
+       console.log(auxVehiculos);
+        guardarEnLocalStorage(auxVehiculos);
+        mostrarVehiculos();
+    }
+    else{
+        let detalle:string  = $('input[name=car]:checked').val() === "true"? "4x4" : "4x2";
+        let nuevaCamioneta = new Classes.Camioneta(id, marca,modelo,precio,detalle);
+        let auxVehiculos:any[] = [];
+        
+        vehiculos.forEach(element => {
+          if( element.id == nuevaCamioneta.id ){
+                    console.log("edito");
+                    element.marca = nuevaCamioneta.marca;
+                    element.modelo = nuevaCamioneta.modelo;
+                    element.precio = nuevaCamioneta.precio;
+                    if( detalle == "4x4"){
+                        element.cuatroXcuatro = "4x4";
+                    }
+                    else{
+                        element.cuatroXcuatro = "4x2";
+                    }
+          }
+        });
+        vehiculos.forEach(element => {
+          auxVehiculos.push(JSON.stringify(element));
+        });
+         console.log(auxVehiculos);
+          guardarEnLocalStorage(auxVehiculos);
+          mostrarVehiculos();
+    }
+}
+
+//LEER LOCAL STORAGE
+function leerLocalStorageJSON():any{
+    let objetos:any[] =  [];
+    let entidades:any[] = (localStorage.getItem('entidades') != null) ? JSON.parse(localStorage.getItem('entidades')) : [];
+    entidades.forEach(element =>{
+        objetos.push(JSON.parse(element));
+    });
+    return objetos;
 }

@@ -137,4 +137,44 @@
     </div>
   </div>
 </div>
+
+<div id="modalEditar" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Vehiculo</h4>
+      </div>
+      <div class="modal-body">
+              <div class="form-group">
+                      <label for="numId" class="form-label-control">Id:</label>
+                      <input type="number" name="id" id="numIdEdit" class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                      <label for="txtMarca" class="form-label-control">Marca:</label>
+                      <input type="text" name="marca" id="txtMarcaEdit" class="form-control">
+              </div>
+              <div class="form-group">
+                      <label for="txtModelo" class="form-label-control">Modelo:</label>
+                      <input type="text" name="modelo" id="txtModeloEdit" class="form-control">
+              </div>
+              <div class="form-group">
+                      <label for="numPrecio" class="form-label-control">Precio</label>
+                      <input type="number" name="numPrecio" id="numPrecioEdit" class="form-control">
+              </div>
+              <div class="form-group">
+                      <label for="tipo" class="form-label-control">Tipo</label>
+                      <input type="radio" name="vtypeEdit" id="chkAutoEdit" value="auto" checked>Auto &nbsp;
+                      <input type="radio" name="vtypeEdit" id="chkCamioEdit" value="camioneta">Camioneta
+              </div>
+              <div class="form-group" id="hiddenCharEdit">
+                      <label for="tipo" class="form-label-control">Caracteristica</label>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btnGuardarEdicion" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-default" id="btnCerrar" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </html>
