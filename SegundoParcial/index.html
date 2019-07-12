@@ -69,7 +69,7 @@
             <div class="modal-body">
                     <div class="form-group">
                             <label for="numId" class="form-label-control">Id:</label>
-                            <input type="number" name="id" id="numId" class="form-control">
+                            <input type="number" name="id" id="numId" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                             <label for="txtMarca" class="form-label-control">Marca:</label>
@@ -85,8 +85,8 @@
                     </div>
                     <div class="form-group">
                             <label for="tipo" class="form-label-control">Tipo</label>
-                            <input type="radio" name="vtype" value="auto" checked>Auto &nbsp;
-                            <input type="radio" name="vtype" value="camioneta">Camioneta
+                            <input type="radio" name="vtype" id="chkAuto" value="auto" checked>Auto &nbsp;
+                            <input type="radio" name="vtype" id="chkCamio" value="camioneta">Camioneta
                     </div>
                     <div class="form-group" id="hiddenChar" hidden>
                             <label for="tipo" class="form-label-control">Caracteristica</label>
@@ -94,7 +94,7 @@
                         
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+              <button type="button" class="btn btn-success" id="btnGuardar" data-dismiss="modal">Guardar</button>
               <button type="button" class="btn btn-default" id="btnCerrar" data-dismiss="modal">Close</button>
             </div>
           </div>

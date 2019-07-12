@@ -62,6 +62,10 @@ function guardarVehiculo() {
         guardarEnLocalStorage(entidades);
         mostrarVehiculos();
     }
+    $("#modalAgregar")
+        .find("input,textarea,select")
+        .val('')
+        .end();
     $(".modal").modal("hide");
 }
 function calcularID() {
@@ -81,12 +85,34 @@ function mostrarVehiculos() {
     var objetos = leerLocalStorage();
     objetos.forEach(function (element) {
         var vehiculo = JSON.parse(element);
-        if (vehiculo.cuatroXcuatro != null) {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td class=\"marca\">" + vehiculo.marca + "</td>\n                    <td class=\"modelo\">" + vehiculo.modelo + "</td>\n                    <td class=\"precio\">" + vehiculo.precio + "</td>\n                    <td class=\"caracteristica\">" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
-        }
-        else {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td class=\"marca\">" + vehiculo.marca + "</td>\n                    <td class=\"modelo\">" + vehiculo.modelo + "</td>\n                    <td class=\"precio\">" + vehiculo.precio + "</td>\n                    <td class=\"caracteristica\">" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
-        }
+        tBody.append("<tr>\n                <td>" + vehiculo.id + "</td>\n                <td>" + vehiculo.marca + "</td>\n                <td>" + vehiculo.modelo + "</td>\n                <td>" + vehiculo.precio + "</td>\n                <td>" + (vehiculo.cuatroXcuatro == null ? vehiculo.cantidadPuertas : vehiculo.cuatroXcuatro) + "</td> \n                <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n            </tr>'); \n            ");
+        //if( vehiculo.cuatroXcuatro != null )
+        //{
+        //    tBody.append(
+        //        `<tr>
+        //            <td>${vehiculo.id}</td>
+        //            <td class="marca">${vehiculo.marca}</td>
+        //            <td class="modelo">${vehiculo.modelo}</td>
+        //            <td class="precio">${vehiculo.precio}</td>
+        //            <td class="caracteristica">${vehiculo.cuatroXcuatro}</td> 
+        //            <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+        //        </tr>'); 
+        //        `
+        //    )
+        //}
+        //else{
+        //    tBody.append(
+        //        `<tr>
+        //            <td>${vehiculo.id}</td>
+        //            <td class="marca">${vehiculo.marca}</td>
+        //            <td class="modelo">${vehiculo.modelo}</td>
+        //            <td class="precio">${vehiculo.precio}</td>
+        //            <td class="caracteristica">${vehiculo.cantidadPuertas}</td> 
+        //            <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+        //        </tr>'); 
+        //        `
+        //    )
+        //}
     });
 }
 function eliminar(i) {
@@ -106,7 +132,6 @@ function filtrarPor() {
         var entidades = leerLocalStorage();
         listafiltrada = entidades.filter(function (entidad) {
             var jsonentidad = JSON.parse(entidad);
-            console.log(jsonentidad.cantidadPuertas);
             if (jsonentidad.cantidadPuertas != undefined)
                 return jsonentidad;
         });
@@ -133,25 +158,76 @@ function mostrarListaFiltrada(lista) {
     var objetos = lista;
     objetos.forEach(function (element) {
         var vehiculo = JSON.parse(element);
-        if (vehiculo.cuatroXcuatro != null) {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
-        }
-        else {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
-        }
+        tBody.append("<tr>\n                <td>" + vehiculo.id + "</td>\n                <td>" + vehiculo.marca + "</td>\n                <td>" + vehiculo.modelo + "</td>\n                <td>" + vehiculo.precio + "</td>\n                <td>" + (vehiculo.cuatroXcuatro == null ? vehiculo.cantidadPuertas : vehiculo.cuatroXcuatro) + "</td> \n                <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n            </tr>'); \n            ");
+        //if( vehiculo.cuatroXcuatro != null )
+        //{
+        //    tBody.append(
+        //        `<tr>
+        //            <td>${vehiculo.id}</td>
+        //            <td>${vehiculo.marca}</td>
+        //            <td>${vehiculo.modelo}</td>
+        //            <td>${vehiculo.precio}</td>
+        //            <td>${vehiculo.cuatroXcuatro}</td> 
+        //            <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+        //        </tr>'); 
+        //        `
+        //    )
+        //}
+        //else{
+        //    tBody.append(
+        //        `<tr>
+        //            <td>${vehiculo.id}</td>
+        //            <td>${vehiculo.marca}</td>
+        //            <td>${vehiculo.modelo}</td>
+        //            <td>${vehiculo.precio}</td>
+        //            <td>${vehiculo.cantidadPuertas}</td> 
+        //            <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
+        //        </tr>'); 
+        //        `
+        //    )
+        //}
     });
     $(".modal").modal("hide");
 }
 function calcularPromedio() {
     var suma = 0;
     var contador = 0;
-    $("#myTable").find('> tbody > tr').each(function () {
-        suma += parseInt($(this).find('td').eq(3).html());
-        contador++;
-    });
-    var resultado = suma / contador;
-    $("#idProm").val(resultado);
+    if (filtro === "sinfiltro") {
+        var objetos = leerLocalStorage();
+        var valor = objetos.reduce(function (sumador, item) {
+            return sumador + JSON.parse(item).precio;
+        }, 0) / objetos.length;
+        $("#idProm").val(valor);
+    }
+    if (filtro === "auto") {
+        var objetos = leerLocalStorage();
+        var autos = objetos.filter(function (vehiculo) {
+            return JSON.parse(vehiculo).cantidadPuertas;
+        });
+        var valor = autos.reduce(function (sumador, item) {
+            return sumador + JSON.parse(item).precio;
+        }, 0) / autos.length;
+        $("#idProm").val(valor);
+    }
+    if (filtro === "camioneta") {
+        var objetos = leerLocalStorage();
+        var camionetas = objetos.filter(function (vehiculo) {
+            return JSON.parse(vehiculo).cuatroXcuatro;
+        });
+        var valor = camionetas.reduce(function (sumador, item) {
+            return sumador + JSON.parse(item).precio;
+        }, 0) / camionetas.length;
+        $("#idProm").val(valor);
+    }
 }
+//function calcularPromedio(){
+//    let objetos = leerLocalStorage();
+//        let valor = objetos.reduce(function(sumador, item){
+//            return sumador + item.precio;
+//        },0) / objetos.length;
+//    console.log(`El promedio es: ${valor}`);
+//    $('#span-promedio').html(valor.toFixed(2));
+//}
 function mostrarOcultarColumna() {
     $("input:checkbox:not(:checked)").each(function () {
         var column = "table ." + $(this).attr("name");

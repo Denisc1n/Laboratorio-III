@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- STYLES -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>Sebastián Aguirre - Segundo Parcial</title>
+    <!-- SCRIPTS -->
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/vehiculo.js"></script>
+    <script src="./js/auto.js"></script>
+    <script src="./js/camioneta.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row col mt-5">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primario">
+                Alta
+            </button>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <div class="form-group">
+                    <label for="selector-filtro">Filtrar Por</label>
+                    <select name="" id="selector-filtro" class="custom-select">
+                        <option value="Camioneta">Camioneta</option>
+                        <option value="Auto">Auto</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-success" id="btn-calcularPromedio">Calcular Promedio</button>
+                <p class="mt-3">Promedio: <span class="ml-2" id="span-promedio"></span></p>
+                <button type="button" class="btn btn-danger" id="btn-limpiarLocal">Limpiar Local Storage</button>
+            </div>
+        </div>
+        <div class="form-row form-group">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 mt-5">
+              <b><label>Ocultar/Mostra Filas: </label></b>
+            </div>
+            <div class="col-xs-12 col-sm--12 col-md-9 col-md-9 mt-5">
+              <input type="checkbox" class="togglecol mr-2" data-target="column1" id="chkCol1" checked>Id
+              <input type="checkbox" class="togglecol mr-2" data-target="column2" id="chkCol2" checked>Marca
+              <input type="checkbox" class="togglecol mr-2" data-target="column3" id="chkCol3" checked>Modelo
+              <input type="checkbox" class="togglecol mr-2" data-target="column4" id="chkCol4" checked>Precio
+              <input type="checkbox" class="togglecol mr-2" data-target="column5" id="chkCol5" checked>Accion
+            </div>
+          </div>
+
+        
+        <!-- MODAL -->
+        <div class="modal fade" id="modal-primario" role="dialog">
+            <div class="modal-dialog">
+                <!-- MODAL CONTENT -->
+                <div class="modal-content">
+                    <!-- MODAL HEADER -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Alta vehiculo</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- MODAL BODY -->
+                    <div class="modal-body">
+                        <form action="" id="Formulario">
+                            <div class="form-group">
+                                <label for="input-id" class="form-label-control">Id:</label>
+                                <input type="text" name="" id="input-id" class="form-control" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtLastname" class="form-label-control">Marca:</label>
+                                <input type="text" name="" id="input-marca" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-modelo" class="form-label-control">Modelo:</label>
+                                <input type="text" name="" id="input-modelo" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-precio" class="form-label-control">Precio:</label>
+                                <input type="number" name="legajo" id="input-precio" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="select-vehiculo">Tipo:</label>
+                                <select name="horario" id="select-vehiculo" class="custom-select">
+                                    <option value="Camioneta">Camioneta</option>
+                                    <option value="Auto">Auto</option>
+                                </select>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <!-- MODAL FOOTER -->
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger mr-r" data-dismiss="modal" id="btn-cancelar">
+                            <i class="fas fa-times mr-2"></i>Cancelar
+                        </button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-agregar">
+                            <i class="fas fa-save mr-2"></i>Agregar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- FORMULARIO Y TABLA -->
+        <div class="row mt-4">
+            <!-- TABLA -->
+            <div class="col">
+                <h2 class="mb-4">Lista</h2>
+                <table class="table table-hover table-striped" id="tPersonas">
+                    <thead class="thead">
+                        <tr>
+                            <th class="column1" id="thId">Id</th>
+                            <th class="column2" id="thMarca">Marca</th>
+                            <th class="column3" id="thModelo">Modelo</th>
+                            <th class="column4" id="thPrecio">Precio</th>
+                            <th class="column5" id="thAccion">Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBody">
+                        <!-- SE ESCRIBE DINAMICAMENTE -->
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-secundario">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content modal-sec">
+                    <p>Modal secundario: <span id="span-modal-secundario"></span> </p>
+                </div>
+            </div>
+          </div>
+
+    </div>
+
+
+    
+</body>
+</html>
