@@ -1,4 +1,5 @@
 "use strict";
+var filtro = "sinfiltro";
 //GUARDAR EN LOCAL STORAGE
 var guardarEnLocalStorage = function (entidades) {
     localStorage.setItem('entidades', JSON.stringify(entidades));
@@ -20,6 +21,8 @@ $(function () {
     $('#btnGuardar').click(guardarVehiculo);
     $('#btn-limpiar').click(limpiarAlmacenamiento);
     $('#btnAplicar').click(filtrarPor);
+    $('#btn-promedio').click(calcularPromedio);
+    $('#checkboxes').on('click', "input[type=checkbox]", mostrarOcultarColumna);
     mostrarVehiculos();
 });
 function mostrarCaracteristica() {
@@ -79,10 +82,10 @@ function mostrarVehiculos() {
     objetos.forEach(function (element) {
         var vehiculo = JSON.parse(element);
         if (vehiculo.cuatroXcuatro != null) {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td class=\"marca\">" + vehiculo.marca + "</td>\n                    <td class=\"modelo\">" + vehiculo.modelo + "</td>\n                    <td class=\"precio\">" + vehiculo.precio + "</td>\n                    <td class=\"caracteristica\">" + vehiculo.cuatroXcuatro + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
         }
         else {
-            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td>" + vehiculo.marca + "</td>\n                    <td>" + vehiculo.modelo + "</td>\n                    <td>" + vehiculo.precio + "</td>\n                    <td>" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
+            tBody.append("<tr>\n                    <td>" + vehiculo.id + "</td>\n                    <td class=\"marca\">" + vehiculo.marca + "</td>\n                    <td class=\"modelo\">" + vehiculo.modelo + "</td>\n                    <td class=\"precio\">" + vehiculo.precio + "</td>\n                    <td class=\"caracteristica\">" + vehiculo.cantidadPuertas + "</td> \n                    <td> <a href=\"#\" class=\"btn btn-danger\" onClick=\"eliminar(" + objetos.indexOf(element) + ")\">Eliminar</a></td> \n                </tr>'); \n                ");
         }
     });
 }
@@ -107,6 +110,7 @@ function filtrarPor() {
             if (jsonentidad.cantidadPuertas != undefined)
                 return jsonentidad;
         });
+        filtro = "auto";
     }
     else if (seleccion === "camioneta") {
         var entidades = leerLocalStorage();
@@ -115,8 +119,10 @@ function filtrarPor() {
             if (jsonentidad.cuatroXcuatro != undefined)
                 return jsonentidad;
         });
+        filtro = "camioneta";
     }
     else {
+        filtro = "sinfiltro";
         listafiltrada = leerLocalStorage();
     }
     mostrarListaFiltrada(listafiltrada);
@@ -135,4 +141,24 @@ function mostrarListaFiltrada(lista) {
         }
     });
     $(".modal").modal("hide");
+}
+function calcularPromedio() {
+    var suma = 0;
+    var contador = 0;
+    $("#myTable").find('> tbody > tr').each(function () {
+        suma += parseInt($(this).find('td').eq(3).html());
+        contador++;
+    });
+    var resultado = suma / contador;
+    $("#idProm").val(resultado);
+}
+function mostrarOcultarColumna() {
+    $("input:checkbox:not(:checked)").each(function () {
+        var column = "table ." + $(this).attr("name");
+        $(column).hide();
+    });
+    $("input:checkbox").click(function () {
+        var column = "table ." + $(this).attr("name");
+        $(column).toggle();
+    });
 }

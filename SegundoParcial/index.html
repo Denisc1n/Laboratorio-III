@@ -27,21 +27,31 @@
                         <a class="nav-link" href="" id="btn-filtrar" data-toggle="modal" data-target="#modalFiltrar">Filtrar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="" id="btn-promedio">Promedio</a>
+                        <a class="nav-link" href="" id="btn-promedio" data-toggle="modal" data-target="#modalPromedio">Promedio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="" id="btn-limpiar">Limpiar Almacenamiento</a>
                     </li>
+                    <li class="nav-link" id="checkboxes">
+                      <label for="colMarca">Marca</label>
+                      <input type="checkbox" name="marca" id="colMarca"  class="togglecol mr-2" data-target="#marca" checked>
+                      <label for="colModelo">Modelo</label>
+                      <input type="checkbox" name="modelo" id="colModelo" class="togglecol mr-2"  data-target="#modelo" checked>
+                      <label for="colPrecio">Precio</label>
+                      <input type="checkbox" name="precio" id="colPrecio" class="togglecol mr-2" data-target="#precio" checked>
+                      <label for="colCaracteristica">Caracteristica</label>
+                      <input type="checkbox" name="caracteristica" id="colCaracteristica" class="togglecol mr-2"  data-target="#caracteristica" checked>
+                  </li>
                 </ul>
             </nav>
         <div class="col-12 col-md-8">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="myTable">
                 <thead>
                     <th>ID</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Precio</th>
-                    <th>Caracteristica</th>
+                    <th class="marca">Marca</th>
+                    <th class="modelo">Modelo</th>
+                    <th class="precio">Precio</th>
+                    <th class="caracteristica">Caracteristica</th>
                     <th id="thAccion">Accion</th>
                 </thead>
                 <tbody id="tBody">
@@ -109,5 +119,22 @@
             </div>
           </div>
         </div>
+</div>
+
+<div id="modalPromedio" class="modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Promedio</h4>
+      </div>
+      <div class="modal-body">
+         <label for="promedio">Promedio</label>
+         <input type="number" name="promedio" id="idProm" disabled>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btnAceptar" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
 </div>
 </html>

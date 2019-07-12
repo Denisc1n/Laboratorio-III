@@ -23,6 +23,7 @@ $(function () {
     $('#btn-limpiar').click(limpiarAlmacenamiento);
     $('#btnAplicar').click(filtrarPor);
     $('#btn-promedio').click(calcularPromedio);
+    $('#checkboxes').on('click',"input[type=checkbox]",mostrarOcultarColumna);
     mostrarVehiculos();
 });
 
@@ -93,10 +94,10 @@ function mostrarVehiculos():void{
             tBody.append(
                 `<tr>
                     <td>${vehiculo.id}</td>
-                    <td>${vehiculo.marca}</td>
-                    <td>${vehiculo.modelo}</td>
-                    <td>${vehiculo.precio}</td>
-                    <td>${vehiculo.cuatroXcuatro}</td> 
+                    <td class="marca">${vehiculo.marca}</td>
+                    <td class="modelo">${vehiculo.modelo}</td>
+                    <td class="precio">${vehiculo.precio}</td>
+                    <td class="caracteristica">${vehiculo.cuatroXcuatro}</td> 
                     <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
                 </tr>'); 
                 `
@@ -106,10 +107,10 @@ function mostrarVehiculos():void{
             tBody.append(
                 `<tr>
                     <td>${vehiculo.id}</td>
-                    <td>${vehiculo.marca}</td>
-                    <td>${vehiculo.modelo}</td>
-                    <td>${vehiculo.precio}</td>
-                    <td>${vehiculo.cantidadPuertas}</td> 
+                    <td class="marca">${vehiculo.marca}</td>
+                    <td class="modelo">${vehiculo.modelo}</td>
+                    <td class="precio">${vehiculo.precio}</td>
+                    <td class="caracteristica">${vehiculo.cantidadPuertas}</td> 
                     <td> <a href="#" class="btn btn-danger" onClick="eliminar(${objetos.indexOf(element)})">Eliminar</a></td> 
                 </tr>'); 
                 `
@@ -197,5 +198,25 @@ function mostrarListaFiltrada(lista:[]):void{
 }
 
 function calcularPromedio():void{
+    let suma: number = 0;
+    let contador:number = 0;
+    $("#myTable").find('> tbody > tr').each(function () {
+        suma+=parseInt($(this).find('td').eq(3).html());
+        contador++;
+    });
+    let resultado = suma/contador;
+    $("#idProm").val(resultado);
+}
 
+function mostrarOcultarColumna(){
+
+    $("input:checkbox:not(:checked)").each(function() {
+        var column = "table ." + $(this).attr("name");
+        $(column).hide();
+    });
+    
+    $("input:checkbox").click(function(){
+        var column = "table ." + $(this).attr("name");
+        $(column).toggle();
+    });
 }
